@@ -1,5 +1,6 @@
 using CSV
 using DataFrames
+using Clustering
 
 
 function load_data()
@@ -21,5 +22,9 @@ function load_data()
 
     return x, y
 end
+
+function cluster_income(x, y)
+    features = convert(Array, DataFrame(X = x.Income, Y = y))
+    result = kmeans(features, 2)
 
 x, y = load_data()
