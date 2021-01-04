@@ -1,6 +1,8 @@
+# Run in interactive mode. Use 'julia -i customer_clustering.jl'.
 using CSV
 using DataFrames
 using Clustering
+using Plots
 
 
 function load_data()
@@ -24,7 +26,24 @@ function load_data()
 end
 
 function cluster_income(x, y)
-    features = convert(Array, DataFrame(X = x.Income, Y = y))
-    result = kmeans(features, 2)
+    features = transpose(convert(Array, DataFrame(X = x.Income, Y = y)))
+    return kmeans(features, 5).assignments
+end
+
+function plot_income(x, y, result)
+    return scatter(
+        x.Income,
+        y,
+        marker_z = result,
+        title = "Customer Clustering",
+        xlabel = "Income",
+        ylabel = "Spending Score",
+        legend = false
+    )
+end
+
 
 x, y = load_data()
+result = cluster_income(x, y)
+plot = plot_income(x, y, result)
+gui(plot)
