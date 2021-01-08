@@ -15,6 +15,13 @@ function load_data()
     return features
 end
 
+function elbow_method(data)
+    features = transpose(convert(Array, data))
+    scores = []
+    for k in 1:10
+        model = kmeans(features, k)
+end
+
 function cluster(data, k)
     features = transpose(convert(Array, data))
     result = kmeans(features, k).assignments
