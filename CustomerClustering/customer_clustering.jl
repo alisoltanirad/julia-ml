@@ -15,10 +15,10 @@ function load_data()
     return features
 end
 
-function elbow_method(data)
+function elbow_method(data, range)
     features = transpose(convert(Array, data))
     scores = []
-    for k in 1:10
+    for k in range
         model = kmeans(features, k)
     end
 end
@@ -41,9 +41,20 @@ function plot_income(data, result)
     )
 end
 
+function plot_elbow_method_result(eb_range, result)
+    return plot(
+        eb_range,
+        eb_result,
+        title = "Elbow Method",
+        xlabel = "K",
+        legend = false
+    )
+
 
 data = load_data()
-elbow = elbow_method(data)
+eb_range = [i for i in 1:10]
+eb_result = elbow_method(data, eb_range)
 result = cluster(data, 5)
-plot = plot_income(data, result)
-gui(plot)
+income_plot = plot_income(data, result)
+eb_plot = plot_elbow_method_result(eb_range, eb_result)
+gui(eb_plot)
