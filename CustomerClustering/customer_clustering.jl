@@ -20,6 +20,7 @@ function elbow_method(data)
     scores = []
     for k in 1:10
         model = kmeans(features, k)
+    end
 end
 
 function cluster(data, k)
@@ -42,6 +43,7 @@ end
 
 
 data = load_data()
+elbow = elbow_method(data)
 result = cluster(data, 5)
 plot = plot_income(data, result)
 gui(plot)

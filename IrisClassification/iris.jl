@@ -1,5 +1,6 @@
 using RDatasets
 using MLJ
+using DecisionTree
 using StatsBase
 using Random
 
@@ -16,5 +17,7 @@ indexes = randperm(n_samples)
 train = indexes[k:end]
 test = indexes[1:k]
 
-classifier = GaussianNB(labels, n_features)
-fit(classifier, x[train, :], y[train])
+classifier = DecisionTreeClassifier()
+DecisionTree.fit!(classifier, x[train, :], y[train])
+pred = DecisionTree.predict(classifier, x[test, :])
+accuracy = sum(pred .== y[test]) / k
